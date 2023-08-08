@@ -11,13 +11,14 @@
             <h4 class="my-0 fw-normal">{{ object.name }}</h4>
         </div>
         <div class="card-body">
-            <img src="{{ object.preview | my_media}}" />
+            <img src="{{ object.preview | my_media }}"/>
             <h2 class="card-title pricing-card-title">{{ object.price }} руб</h2>
             <p>{{ object.description }}</p>
             <div>
                 <p>
-                    <button type="button" class="h-100 btn btn-lg btn-secondary text-grey">Посмотреть товар
-                    </button>
+                    <a href="{% url 'catalog:product' object.pk %}" type="button"
+                       class="h-100 btn btn-lg btn-secondary text-grey">Посмотреть о товаре
+                    </a>
                 </p>
             </div>
             <div>

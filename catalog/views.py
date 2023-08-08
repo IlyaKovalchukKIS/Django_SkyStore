@@ -5,6 +5,7 @@ from django.shortcuts import render
 from catalog.models import Product, Category
 from catalog.forms import ProductForm
 
+
 # Create your views here.
 
 def home(request):
@@ -52,10 +53,15 @@ def create_product(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'catalog/create_product.html', context)  # Перенаправьте на нужную страницу после сохранения
+            return render(request, 'catalog/create_product.html',
+                          context)  # Перенаправьте на нужную страницу после сохранения
     else:
         form = ProductForm()
         return render(request, 'catalog/create_product.html', {'form': form})
 
 
-
+def product(request, pk):
+    context = {
+        'object_list': Product.objects.get(id=pk)
+    }
+    return render(request, 'catalog/product.html', context)
