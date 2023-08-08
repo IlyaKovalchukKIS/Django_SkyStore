@@ -17,7 +17,7 @@ Including another URLconf
 from django.urls import path
 
 from catalog.apps import CatalogConfig
-from catalog.views import home, contacts, category_product, categories, create_product
+from catalog.views import home, contacts, category_product, categories, create_product, product
 from config import settings
 from django.conf.urls.static import static
 
@@ -28,5 +28,6 @@ urlpatterns = [
     path('categories/', categories, name='categories'),
     path('contacts/', contacts, name='contacts'),
     path('<int:pk>/category_product/', category_product, name='category_product'),
-    path('create_product/', create_product, name='create_product')
+    path('create_product/', create_product, name='create_product'),
+    path('<int:pk>/product/', product, name='product')
 ]

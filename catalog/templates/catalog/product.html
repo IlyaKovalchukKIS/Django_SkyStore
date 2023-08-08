@@ -1,0 +1,30 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<style>
+    img {
+        width: 1000px;
+        height: 900;
+    }
+</style>
+<div class="bd-content ps-lg-2">
+
+    <header>
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <p class="fs-1 text-body-secondary">{{ object_list.name }}</p>
+            <img src="{{ object_list.preview | my_media }}"/>
+        </div>
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <p class="fs-4 text-body-secondary">{{ object_list.description }}</p>
+        </div>
+    </header>
+    <!--    <h1 id="headings">{{ object_list.name }}<a class="text" href=""></a>-->
+    <!--    </h1>-->
+    <!--    <img src="{{ object_list.preview | my_media }}"/>-->
+    <!--    <div class="bd-example-snippet bd-code-snippet">-->
+    <!--        <div class="bd-example m-0 border-0">-->
+    <!--            <h2>{{ object_list.description }}</h2>-->
+    <!--&lt;!&ndash;        </div>&ndash;&gt;-->
+    <!--    </div>-->
+</div>
+{% endblock %}
