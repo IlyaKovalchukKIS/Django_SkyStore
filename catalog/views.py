@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from django.shortcuts import render
-
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
 from catalog.models import Product, Category
 from catalog.forms import ProductForm
 
@@ -26,42 +27,27 @@ def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
-def categories(request):
-    context = {
-        'object_list': Category.objects.all(),
-        'title': 'Категории'
-    }
-
-    return render(request, 'catalog/categories.html', context)
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('name', 'description', 'preview', 'category', 'price', 'date_creation', 'date_last_change',)
+    success_url = reverse_lazy('catalog:product_list')
 
 
-def category_product(request, pk):
-    category_item = Category.objects.get(id=pk)
-    context = {
-        'object_list': Product.objects.filter(category_id=pk),
-        'title': category_item.name,
-        'description': category_item.description[:100]
-    }
-    return render(request, 'catalog/category_product.html', context)
+class ProductListView(ListView):
+    model = Product
 
 
-def create_product(request):
-    context = {
-        'object_list': Category.objects.all()
-    }
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return render(request, 'catalog/create_product.html',
-                          context)  # Перенаправьте на нужную страницу после сохранения
-    else:
-        form = ProductForm()
-        return render(request, 'catalog/create_product.html', {'form': form})
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def product(request, pk):
-    context = {
-        'object_list': Product.objects.get(id=pk)
-    }
-    return render(request, 'catalog/product.html', context)
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ('name', 'description', 'preview', 'category', 'price', 'date_creation', 'date_last_change',)
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    reverse_lazy = reverse_lazy('catalog:product_list')
+

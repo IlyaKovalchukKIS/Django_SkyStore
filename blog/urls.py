@@ -16,20 +16,20 @@ Including another URLconf
 """
 from django.urls import path
 
-from catalog.apps import CatalogConfig
-from catalog.views import home, contacts, ProductCreateView, ProductListView, ProductDetailView, ProductUpdateView, \
-    ProductDeleteView
+from blog.apps import BlogConfig
+from blog.views import BlogDeleteView, BlogDetailView, BlogListView, BlogUpdateView, BlogCreateView
+from catalog.views import home, contacts
 from config import settings
 from django.conf.urls.static import static
 
-app_name = CatalogConfig.name
+app_name = BlogConfig.name
 
 urlpatterns = [
     path('', home, name='home'),
     path('contacts/', contacts, name='contacts'),
-    path('product/create/', ProductCreateView.as_view(), name='product_create'),
-    path('product/list/', ProductListView.as_view(), name='product_list'),
-    path('product/view/<int:pk>', ProductDetailView.as_view(), name='product_view'),
-    path('product/edit/<int:pk>', ProductUpdateView.as_view(), name='product_edit'),
-    path('product/delete/<int:pk>', ProductDeleteView.as_view(), name='product_delete'),
+    path('blog/create/', BlogCreateView.as_view(), name='blog_create'),
+    path('blog/list/', BlogListView.as_view(), name='blog_list'),
+    path('blog/view/<int:pk>', BlogDetailView.as_view(), name='blog_view'),
+    path('blog/edit/<int:pk>', BlogUpdateView.as_view(), name='blog_edit'),
+    path('blog/delete/<int:pk>', BlogDeleteView.as_view(), name='blog_delete'),
 ]
