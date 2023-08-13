@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<style>
+    img {
+        width: 1000px;
+        height: 900;
+    }
+</style>
+<div class="bd-content ps-lg-2">
+
+    <header>
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <p class="fs-1 text-body-secondary">"Блог {{ object.title }} ({{ object.slug }})"</p>
+            <img src="{{ object.preview | my_media }}"/>
+        </div>
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <p class="fs-4 text-body-secondary">{{ object.body }}</p>
+            <div class="card-footer">
+                Просмотры: {{ object.view_count }}
+            </div>
+        </div>
+    </header>
+</div>
+{% endblock %}
