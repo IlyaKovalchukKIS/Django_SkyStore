@@ -32,6 +32,17 @@ class ProductCreateView(CreateView):
     fields = ('name', 'description', 'preview', 'category', 'price', 'date_creation', 'date_last_change',)
     success_url = reverse_lazy('catalog:product_list')
 
+    def form_valid(self, form):
+        image = self.request.FILES.get('image')
+        if image:
+            new_product = form.save(commit=False)
+            new_product.image = image
+            new_product.save()
+        else:
+            form.save()
+
+        return super().form_valid(form)
+
 
 class ProductListView(ListView):
     model = Product
@@ -43,11 +54,10 @@ class ProductDetailView(DetailView):
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ('name', 'description', 'preview', 'category', 'price', 'date_creation', 'date_last_change',)
+    fields = ('name', 'description', 'preview', 'category', 'price', 'date_last_change',)
     success_url = reverse_lazy('catalog:product_list')
 
 
 class ProductDeleteView(DeleteView):
     model = Product
-    reverse_lazy = reverse_lazy('catalog:product_list')
-
+    success_url = reverse_lazy('catalog:product_list')
