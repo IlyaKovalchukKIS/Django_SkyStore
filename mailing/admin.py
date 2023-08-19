@@ -1,27 +1,23 @@
 from django.contrib import admin
 
-from mailing.models import Frequency, Mailing, Status, Message
+from mailing.models import EmailMessage, EmailSettings, EmailLog
 
 
 # Register your models here.
 
-@admin.register(Frequency)
-class FrequencyAdmin(admin.ModelAdmin):
-    list_display = ('frequency',)
-    search_fields = ('frequency',)
+@admin.register(EmailMessage)
+class EmailMessageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'text',)
+    search_fields = ('title',)
 
 
-@admin.register(Mailing)
-class MailingAdmin(admin.ModelAdmin):
-    list_display = ('date_mailing', 'frequency', 'status',)
-    list_filter = ('date_mailing', 'frequency', 'status',)
+@admin.register(EmailSettings)
+class EmailSettingsAdmin(admin.ModelAdmin):
+    list_display = ('user', 'sending_time', 'frequency', 'status', 'message',)
+    list_filter = ('user', 'sending_time', 'status',)
 
 
-@admin.register(Status)
-class StatusAdmin(admin.ModelAdmin):
-    list_display = ('status',)
+@admin.register(EmailLog)
+class EmailLogAdmin(admin.ModelAdmin):
+    list_display = ('recipient', 'sent_datetime', 'status', 'response',)
 
-
-@admin.register(Message)
-class MessageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'text', )
