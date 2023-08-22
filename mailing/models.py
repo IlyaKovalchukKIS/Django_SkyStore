@@ -11,7 +11,7 @@ class EmailMessage(models.Model):
     text = models.TextField(max_length=1000, verbose_name='текст', **NULLABLE)
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.__class__.__name__}:({self.title})"
 
     class Meta:
         verbose_name = 'сообщение'
@@ -36,14 +36,14 @@ class EmailSettings(models.Model):
         ('completed', 'завершена'),
         ('launched', 'запущена')
     ]
-    user = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='пользователи')
+    user = models.ManyToManyField(Client, verbose_name='пользователи')
     sending_time = models.CharField(max_length=20, choices=SENDING_TIME_CHOICES, verbose_name='время рассылки')
     frequency = models.CharField(max_length=20, choices=FREQUENCY_CHOICES, verbose_name='периодичность рассылки')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name='статус')
     message = models.ForeignKey(EmailMessage, on_delete=models.CASCADE, verbose_name='сообщение', **NULLABLE)
 
     def __str__(self):
-        return f'{self.user.email} - {self.frequency}'
+        return f'{self.__class__.__name__}:({self.pk} {self.message.title})'
 
     class Meta:
         verbose_name = 'рассылка'
@@ -55,10 +55,10 @@ class EmailLog(models.Model):
     sent_datetime = models.DateTimeField(verbose_name='дата отправки', **NULLABLE)
     status = models.CharField(max_length=50, **NULLABLE, verbose_name='статус')
     response = models.TextField(**NULLABLE, verbose_name='ответ')
-    email_settings = models.ManyToManyField(EmailSettings, verbose_name='рассылка')
+    email_settings = models.ForeignKey(EmailSettings, on_delete=models.CASCADE, verbose_name='рассылка', **NULLABLE)
 
     def __str__(self):
-        return f'{self.recipient} {self.sent_datetime} {self.status} {self.email_settings}'
+        return f'{self.__class__.__name__}:({self.recipient} {self.sent_datetime} {self.status} {self.email_settings})'
 
     class Meta:
         verbose_name = 'лог'

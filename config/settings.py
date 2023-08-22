@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'client',
     'mailing',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -107,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -129,3 +130,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRONJOBS = [
+    ('* * * * *', 'mailing.services.send_email'),
+]
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "KovalchukIlya14@yandex.ru"
+EMAIL_HOST_PASSWORD = "krtuubdwjfbknfnz"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
