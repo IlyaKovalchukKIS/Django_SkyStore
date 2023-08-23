@@ -29,7 +29,7 @@ def contacts(request):
 
 class ProductCreateView(CreateView):
     model = Product
-    fields = ('name', 'description', 'preview', 'category', 'price', 'date_creation', 'date_last_change',)
+    form_class = ProductForm
     success_url = reverse_lazy('catalog:product_list')
 
     def form_valid(self, form):
@@ -54,7 +54,7 @@ class ProductDetailView(DetailView):
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ('name', 'description', 'preview', 'category', 'price', 'date_last_change',)
+    form_class = ProductForm
     success_url = reverse_lazy('catalog:product_list')
 
 
